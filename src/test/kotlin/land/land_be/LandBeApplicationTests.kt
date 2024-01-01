@@ -1,4 +1,4 @@
-package ladn.land_be
+package land.land_be
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

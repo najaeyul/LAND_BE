@@ -1,4 +1,4 @@
-package ladn.land_be
+package land.land_be
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

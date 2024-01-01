@@ -1,4 +1,4 @@
-package ladn.land_be.config.oauth2
+package land.land_be.config.security.oauth2
 
 import org.springframework.security.oauth2.client.registration.ClientRegistration
 import org.springframework.security.oauth2.core.AuthorizationGrantType

@@ -1,17 +1,15 @@
-package ladn.land_be.controller
+package land.land_be.controller
 
-import lombok.RequiredArgsConstructor
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/")
-class MemberController {
+@RequestMapping("/api")
+class Controller {
 
-    @GetMapping("/")
-    fun index() {
-
+    @GetMapping
+    fun hello(): String {
+        return "hello"
     }
 }

@@ -1,4 +1,4 @@
-package ladn.land_be.config.oauth2
+package land.land_be.config.security.oauth2
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component

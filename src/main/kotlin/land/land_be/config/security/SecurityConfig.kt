@@ -1,7 +1,7 @@
-package ladn.land_be.config
+package land.land_be.config.security
 
-import ladn.land_be.config.oauth2.CustomOAuth2ClientProperties
-import ladn.land_be.config.oauth2.CustomOAuth2Provider
+import land.land_be.config.security.oauth2.CustomOAuth2ClientProperties
+import land.land_be.config.security.oauth2.CustomOAuth2Provider
 import lombok.RequiredArgsConstructor
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties
 import org.springframework.context.annotation.Bean
@@ -55,7 +55,8 @@ class SecurityConfig {
             for (customRegistration in customRegistrations) {
 
                 when (customRegistration.key) {
-                    "naver" -> registrations.add(CustomOAuth2Provider.NAVER.getBuilder("naver")
+                    "naver" -> registrations.add(
+                        CustomOAuth2Provider.NAVER.getBuilder("naver")
                         .clientId(customRegistration.value.clientId)
                         .clientSecret(customRegistration.value.clientSecret)
                         .build())
