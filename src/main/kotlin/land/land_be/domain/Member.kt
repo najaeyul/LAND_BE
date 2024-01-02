@@ -18,5 +18,4 @@ class Member(
     @Id
     @GeneratedValue
     val email: String
-) : DateInfo() {
-}
+) : DateInfo()

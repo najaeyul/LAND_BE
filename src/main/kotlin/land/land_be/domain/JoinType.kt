@@ -1,6 +1,6 @@
 package land.land_be.domain
 
-enum class JoinType () {
+enum class JoinType {
     GOOGLE,
     NAVER
 }

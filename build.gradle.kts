@@ -35,6 +35,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     annotationProcessor("org.projectlombok:lombok")
+    implementation ("io.jsonwebtoken:jjwt-api:0.11.2")
+    runtimeOnly ("io.jsonwebtoken:jjwt-impl:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     annotationProcessor ("org.springframework.boot:spring-boot-configuration-processor")
 

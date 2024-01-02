@@ -6,7 +6,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.stereotype.Component
 
+@Component
 class CustomUserService(private val memberRepository: MemberRepository):
     UserDetailsService {
         override fun loadUserByUsername(username: String): UserDetails {

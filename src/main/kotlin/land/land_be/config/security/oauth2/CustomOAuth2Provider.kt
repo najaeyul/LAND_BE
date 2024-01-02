@@ -40,5 +40,4 @@ enum class CustomOAuth2Provider {
      * 유연성: 추상 메소드는 서브 클래스마다 다른 구현을 가질 수 있습니다. 이는 상황에 따라 메소드의 동작을 변경할 수 있게 하여, 프로그램의 유연성을 높입니다
      */
     abstract fun getBuilder(registrationId: String): ClientRegistration.Builder
-
 }
