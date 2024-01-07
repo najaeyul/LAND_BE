@@ -13,7 +13,7 @@ class UserRequestMapper {
         return MemberDto.MemberRequestDto(
             email = attributes["email"] as String,
             name = attributes["name"] as String,
-            gender = attributes["picture"] as String,
+            gender = attributes["gender"] as String,
             birthYear = attributes["birthYear"] as String,
             joinType =  JoinType.GOOGLE,
             role = RoleType.MEMBER

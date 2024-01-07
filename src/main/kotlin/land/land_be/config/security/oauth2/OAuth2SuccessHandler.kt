@@ -29,6 +29,7 @@ class OAuth2SuccessHandler(
         val userDto = userRequestMapper.toDto(oAuth2User)
 
         // 최초 로그인이라면 회원가입 처리를 한다.
+
         val token = jwtTokenProvider.generateToken(userDto.email, "MEMBER")
         log.info("{}", token)
 
