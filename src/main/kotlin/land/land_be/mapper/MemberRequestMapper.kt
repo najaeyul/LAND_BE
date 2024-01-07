@@ -11,6 +11,7 @@ class UserRequestMapper {
     fun toDto(oAuth2User: OAuth2User): MemberDto.MemberRequestDto {
         val attributes = oAuth2User.attributes
         return MemberDto.MemberRequestDto(
+            id = attributes["id"] as String,
             email = attributes["email"] as String,
             name = attributes["name"] as String,
             gender = attributes["gender"] as String,

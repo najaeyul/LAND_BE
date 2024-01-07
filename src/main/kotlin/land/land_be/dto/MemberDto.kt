@@ -14,6 +14,7 @@ class MemberDto {
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
     data class MemberRequestDto(
+        val id: String,
         val email: String,
         val name: String,
         val gender: String,

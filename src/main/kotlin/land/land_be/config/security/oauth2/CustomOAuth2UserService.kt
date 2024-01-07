@@ -20,15 +20,12 @@ class CustomOAuth2UserService : OAuth2UserService<OAuth2UserRequest, OAuth2User>
 
         val registrationId = userRequest.clientRegistration.registrationId
         val userNameAttributeName = userRequest.clientRegistration.providerDetails.userInfoEndpoint.userNameAttributeName
-
         val oAuth2Attribute = OAuthAttribute.of(registrationId, userNameAttributeName, oAuth2User.attributes)
 
         var memberAttribute = oAuth2Attribute.convertToMap();
-
-
         return DefaultOAuth2User(
             listOf(SimpleGrantedAuthority("MEMBER")),
             memberAttribute,
-            oAuth2Attribute.email)
+            "id")
     }
 }

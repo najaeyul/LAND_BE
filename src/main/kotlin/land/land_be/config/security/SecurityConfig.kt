@@ -35,7 +35,7 @@ class SecurityConfig(
     @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .headers{headers -> headers.httpStrictTransportSecurity { hsts -> hsts.disable() }}
+            .headers { headers -> headers.httpStrictTransportSecurity { hsts -> hsts.disable() } }
 //            .cors { cors ->
 //                cors.configurationSource(corsConfigurationSource)
 //            }
@@ -43,7 +43,8 @@ class SecurityConfig(
 //                exception.accessDeniedHandler(accessDeniedHandler())
 //                exception.authenticationEntryPoint(authenticationEntryPoint())
 //            }
-            .csrf { csrf -> csrf.disable()
+            .csrf { csrf ->
+                csrf.disable()
             }
             .sessionManagement { sessionManagement ->
                 sessionManagement
@@ -126,56 +127,4 @@ class SecurityConfig(
             response.writer.close()
         }
     }
-//
-//    @Bean
-//    fun clientRegistrationRepository(oAuth2ClientProperties: OAuth2ClientProperties,
-//                                     customOAuth2ClientProperties: CustomOAuth2ClientProperties
-//    ): InMemoryClientRegistrationRepository {
-//
-//        // 소셜 설정 등록
-//        val registrations = oAuth2ClientProperties.registration.keys.mapNotNull {
-//            getRegistration(
-//                oAuth2ClientProperties,
-//                it
-//            )
-//        }
-//            .toMutableList()
-//
-//        // 추가 설정 프로퍼티
-//        val customRegistrations = customOAuth2ClientProperties.registration
-//
-//        // 추가 소셜 설정을 기본 소셜 설정에 추가
-//        if (customRegistrations != null) {
-//            for (customRegistration in customRegistrations) {
-//
-//                when (customRegistration.key) {
-//                    "naver" -> {
-//                        if (customRegistration.value.clientId != null && customRegistration.value.clientSecret != null) {
-//                            registrations.add(
-//                                CustomOAuth2Provider.NAVER.getBuilder("naver")
-//                                    .clientId(customRegistration.value.clientId)
-//                                    .clientSecret(customRegistration.value.clientSecret)
-//                                    .build()
-//                            )
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        return InMemoryClientRegistrationRepository(registrations)
-//    }
-//
-//    // 공통 소셜 설정을 호출합니다.
-//    private fun getRegistration(clientProperties: OAuth2ClientProperties, client: String): ClientRegistration? {
-//        val registration = clientProperties.registration[client]
-//        return when(client) {
-//            "google" -> CommonOAuth2Provider.GOOGLE.getBuilder(client)
-//                .clientId(registration?.clientId)
-//                .clientSecret(registration?.clientSecret)
-//                .scope("email", "profile")
-//                .build()
-//            else -> null
-//        }
-//    }
 }

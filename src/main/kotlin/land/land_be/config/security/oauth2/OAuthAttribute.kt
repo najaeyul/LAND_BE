@@ -1,19 +1,15 @@
 package land.land_be.config.security.oauth2
 
-import org.hibernate.query.sqm.tree.SqmNode.log
-import org.slf4j.LoggerFactory
-
 
 data class OAuthAttribute(
     var attributes: Map<String, Any>,
     var attributeKey: String,
+    var id: String,
     var email: String,
     var name: String,
     var gender: String,
     var birthYear: String,
-
 ) {
-    private val log = LoggerFactory.getLogger(this::class.java)
 
     companion object {
         fun of(registrationId: String, attributeKey: String, attributes: Map<String, Any>) : OAuthAttribute {
@@ -25,15 +21,10 @@ data class OAuthAttribute(
         }
 
         private fun ofGoogle(attributeKey: String, attributes: Map<String, Any>): OAuthAttribute {
-            var arr: () -> Unit = {attributes["email"]}
-            arr.apply { attributes["name"] }
-            arr.apply { attributes["gender"] }
-            arr.apply { attributes["birthday"] }
-
-            log.info(arr)
             return OAuthAttribute(
                 attributes,
                 attributeKey,
+                attributes["sub"] as? String ?: "",
                 attributes["email"] as? String ?: "",
                 attributes["name"] as? String ?: "",
                 attributes["gender"] as? String ?: "",
@@ -43,19 +34,27 @@ data class OAuthAttribute(
 
         private fun ofNaver(attributeKey: String, attributes: Map<String, Any>): OAuthAttribute {
             val response = attributes["response"] as Map<String, Any>
+            val gender = when (attributes["gender"] as? String) {
+                "male" -> "M"
+                "female" -> "F"
+                else -> ""
+            }
+            val birthday = (attributes["birthday"] as? String)?.substring(0, 4) ?: ""
+
             return OAuthAttribute(
                 attributes,
                 attributeKey,
+                response["id"] as? String ?: "",
                 response["email"] as String,
                 response["name"] as String,
-                response["gender"] as String,
-                response["birthyear"] as String
+                gender,
+                birthday
             )
         }
     }
     fun convertToMap(): Map<String, Any> {
         return mapOf(
-            "id" to attributeKey,
+            "id" to id,
             "key" to attributeKey,
             "name" to name,
             "email" to email,

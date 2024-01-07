@@ -10,6 +10,7 @@ class CustomUser(
     private val member: Member,
     authorities: Collection<GrantedAuthority>
 ) : User(member.email, "", true, true, true, true, authorities) {
+    val id: String = member.id
     val email: String = member.email
     val name:  String = member.name
     val gender: String? = member.gender

@@ -6,6 +6,7 @@ import land.land_be.common.DateInfo
 @Entity
 class Member(
 
+    val email: String,
     val name: String,
     val gender: String? = null,
     val birthYear: String? = null,
@@ -15,7 +16,7 @@ class Member(
     @Enumerated(EnumType.STRING)
     val role: RoleType,
 
-    @Id
-    @GeneratedValue
-    val email: String
+    @Id @Column(name = "member_id")
+    val id: String
+
 ) : DateInfo()
