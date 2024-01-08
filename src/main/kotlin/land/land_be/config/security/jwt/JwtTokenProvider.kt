@@ -7,7 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import jakarta.annotation.PostConstruct
 import jakarta.servlet.http.HttpServletRequest
-import land.land_be.dto.MemberDto
+import land.land_be.dto.member.MemberDto
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.crypto.SecretKey
+
 
 @Component
 class JwtTokenProvider(
@@ -31,7 +32,9 @@ class JwtTokenProvider(
 
     @PostConstruct
     fun init() {
-        key = Keys.secretKeyFor(SignatureAlgorithm.HS256).also { secretKey = Base64.getEncoder().encodeToString(it.encoded) }
+        //key = Keys.secretKeyFor(SignatureAlgorithm.HS256)
+        key = Keys.hmacShaKeyFor(secretKey.toByteArray())
+
     }
 
     // token 생성
@@ -45,13 +48,14 @@ class JwtTokenProvider(
             .setClaims(claims)
             .setIssuedAt(now)
             .setExpiration(Date(now.time + tokenValidTime))
-            .signWith(key)
+            .signWith(key, SignatureAlgorithm.HS256)
             .compact()
+
         val refreshToken = Jwts.builder()
             .setClaims(claims)
             .setIssuedAt(now)
             .setExpiration(Date(now.time + refreshTokenValidTime))
-            .signWith(key)
+            .signWith(key, SignatureAlgorithm.HS256)
             .compact()
 
         return MemberDto.TokenDto(token, refreshToken)

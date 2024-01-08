@@ -11,6 +11,9 @@ data class OAuthAttribute(
     var birthYear: String,
 ) {
 
+    /**
+     * 서비스별 데이터 객체 받기
+     */
     companion object {
         fun of(registrationId: String, attributeKey: String, attributes: Map<String, Any>) : OAuthAttribute {
             when (registrationId) {

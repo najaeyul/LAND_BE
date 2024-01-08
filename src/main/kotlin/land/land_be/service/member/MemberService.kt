@@ -1,9 +1,9 @@
-package land.land_be.service
+package land.land_be.service.member
 
 import jakarta.transaction.Transactional
-import land.land_be.domain.Member
-import land.land_be.dto.MemberDto
-import land.land_be.repository.MemberRepository
+import land.land_be.domain.member.Member
+import land.land_be.dto.member.MemberDto
+import land.land_be.repository.member.MemberRepository
 import org.springframework.stereotype.Service
 
 @Transactional

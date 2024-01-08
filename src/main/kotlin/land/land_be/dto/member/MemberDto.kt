@@ -1,14 +1,14 @@
-package land.land_be.dto
+package land.land_be.dto.member
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
-import land.land_be.domain.JoinType
-import land.land_be.domain.RoleType
+import land.land_be.domain.member.JoinType
+import land.land_be.domain.member.RoleType
 
 class MemberDto {
 
     data class TokenDto(
-        val token: String,
+        val authToken: String,
         val refreshToken: String,
     )
 

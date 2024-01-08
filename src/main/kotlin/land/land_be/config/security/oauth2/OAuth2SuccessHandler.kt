@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import land.land_be.config.security.jwt.JwtTokenProvider
-import land.land_be.domain.JoinType
-import land.land_be.domain.RoleType
-import land.land_be.dto.MemberDto
+import land.land_be.domain.member.JoinType
+import land.land_be.domain.member.RoleType
+import land.land_be.dto.member.MemberDto
 import land.land_be.mapper.UserRequestMapper
-import land.land_be.service.MemberService
+import land.land_be.service.member.MemberService
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
@@ -54,16 +54,20 @@ class OAuth2SuccessHandler(
             memberService.signUp(memberRequestDto)
         }
 
+        // 토큰 발행
         val token = jwtTokenProvider.generateToken(userDto.email, "MEMBER")
         log.info("{}", token)
 
         writeTokenResponse(response, token)
     }
 
+    /**
+     * 토큰 작성
+     */
     private fun writeTokenResponse(response: HttpServletResponse, token: MemberDto.TokenDto) {
         response.contentType = "text/html;charset=UTF-8"
 
-        response.addHeader("X-AUTH-TOKEN", token.token)
+        response.addHeader("X-AUTH-TOKEN", token.authToken)
         response.addHeader("X-REFRESH-TOKEN", token.refreshToken)
         response.contentType = "application/json;charset=UTF-8"
 

@@ -1,8 +1,8 @@
 package land.land_be.config.security
 
-import land.land_be.domain.JoinType
-import land.land_be.domain.Member
-import land.land_be.domain.RoleType
+import land.land_be.domain.member.JoinType
+import land.land_be.domain.member.Member
+import land.land_be.domain.member.RoleType
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.User
 

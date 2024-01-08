@@ -1,20 +1,14 @@
 package land.land_be.config.security
 
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
 import land.land_be.config.security.oauth2.CustomOAuth2UserService
 import land.land_be.config.security.oauth2.OAuth2SuccessHandler
 import lombok.RequiredArgsConstructor
 import org.springframework.context.annotation.Bean
-import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.config.Customizer.withDefaults
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.core.AuthenticationException
-import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.stereotype.Component
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
@@ -28,7 +22,8 @@ import java.util.*
 class SecurityConfig(
     private val customOAuth2UserService: CustomOAuth2UserService,
     private val successHandler: OAuth2SuccessHandler,
-    private val corsConfigurationSource: CorsConfigurationSource
+    private val corsConfigurationSource: CorsConfigurationSource,
+    private val securityHandlerConfig: SecurityHandlerConfig
 ) {
 
     @Bean
@@ -36,24 +31,24 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .headers { headers -> headers.httpStrictTransportSecurity { hsts -> hsts.disable() } }
-//            .cors { cors ->
-//                cors.configurationSource(corsConfigurationSource)
-//            }
-//            .exceptionHandling { exception ->
-//                exception.accessDeniedHandler(accessDeniedHandler())
-//                exception.authenticationEntryPoint(authenticationEntryPoint())
-//            }
+            .cors { cors ->
+                cors.configurationSource(corsConfigurationSource)
+            }
+            .authorizeHttpRequests { authorize ->
+                authorize
+                    .requestMatchers("/api/**", "/login/**", "/oauth2/**", "/images/**").permitAll()
+                    .anyRequest().authenticated()
+            }
+            .exceptionHandling { exception ->
+                exception.accessDeniedHandler(securityHandlerConfig.accessDeniedHandler())
+                exception.authenticationEntryPoint(securityHandlerConfig.authenticationEntryPoint())
+            }
             .csrf { csrf ->
                 csrf.disable()
             }
             .sessionManagement { sessionManagement ->
                 sessionManagement
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            }
-            .authorizeHttpRequests { authorize ->
-                authorize
-//                    .requestMatchers("/", "/login/**", "/oauth2/**", "/images/**").permitAll()
-                    .anyRequest().authenticated()
             }
             .oauth2Login { oauth2 ->
                 oauth2
@@ -86,45 +81,5 @@ class SecurityConfig(
         source.registerCorsConfiguration("/**", configuration)
 
         return source
-    }
-
-    @Bean
-    fun accessDeniedHandler(): AccessDeniedHandler? {
-        return AccessDeniedHandler { request: HttpServletRequest?, response: HttpServletResponse, e: AccessDeniedException? ->
-            response.status = HttpServletResponse.SC_FORBIDDEN
-            response.contentType = "text/plain;charset=UTF-8"
-            response.writer.write(
-//                "{" +
-//                        "\"detail\": \"" + ErrorCode.UNAUTHORIZED.getDetail() + "\"," +
-//                        "\"code\": \"" + ErrorCode.UNAUTHORIZED.getCode() + "\"" +
-//                        "}"
-                "{" +
-                        "\"detail\": \"" + "잘못된토큰" + "\"," +
-                        "\"code\": \"" + "ㅎㅎ" + "\"" +
-                        "}"
-            )
-            response.writer.flush()
-            response.writer.close()
-        }
-    }
-
-    @Bean
-    fun authenticationEntryPoint(): AuthenticationEntryPoint? {
-        return AuthenticationEntryPoint { request: HttpServletRequest?, response: HttpServletResponse, e: AuthenticationException? ->
-            response.status = HttpServletResponse.SC_UNAUTHORIZED
-            response.contentType = "text/plain;charset=UTF-8"
-            response.writer.write(
-//                "{" +
-//                        "\"detail\": \"" + ErrorCode.INVALID_TOKEN.getDetail() + "\"," +
-//                        "\"code\": \"" + ErrorCode.INVALID_TOKEN.getCode() + "\"" +
-//                        "}"
-                "{" +
-                        "\"detail\": \"" + "잘못된토큰" + "\"," +
-                        "\"code\": \"" + "ㅎㅎ" + "\"" +
-                        "}"
-            )
-            response.writer.flush()
-            response.writer.close()
-        }
     }
 }

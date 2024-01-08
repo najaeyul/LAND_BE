@@ -1,4 +1,4 @@
-package land.land_be.domain
+package land.land_be.domain.member
 
 import jakarta.persistence.*
 import land.land_be.common.DateInfo

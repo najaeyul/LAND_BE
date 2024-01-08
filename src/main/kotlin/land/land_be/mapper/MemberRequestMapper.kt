@@ -1,8 +1,8 @@
 package land.land_be.mapper
 
-import land.land_be.domain.JoinType
-import land.land_be.domain.RoleType
-import land.land_be.dto.MemberDto
+import land.land_be.domain.member.JoinType
+import land.land_be.domain.member.RoleType
+import land.land_be.dto.member.MemberDto
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Component
 

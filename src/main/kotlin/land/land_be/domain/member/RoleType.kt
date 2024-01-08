@@ -1,4 +1,4 @@
-package land.land_be.domain
+package land.land_be.domain.member
 
 enum class RoleType(
     val role: String

@@ -1,6 +1,6 @@
 package land.land_be.config.security
 
-import land.land_be.repository.MemberRepository
+import land.land_be.repository.member.MemberRepository
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
